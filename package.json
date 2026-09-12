@@ -1,0 +1,46 @@
+{
+  "name": "opencode-deepseek-chan",
+  "version": "1.0.0",
+  "description": "Animated video backgrounds & cyber glassmorphism theme for OpenCode Desktop (DeepSeek-chan). 适用于 OpenCode Desktop 的 DeepSeek 赛博动态壁纸主题。",
+  "main": "bin/cli.js",
+  "bin": {
+    "opencode-deepseek-chan": "./bin/cli.js"
+  },
+  "scripts": {
+    "start": "node ./bin/cli.js",
+    "test": "node --test test/*.test.js",
+    "install-theme": "node ./bin/cli.js --install",
+    "uninstall-theme": "node ./bin/cli.js --uninstall"
+  },
+  "files": [
+    "bin",
+    "src",
+    "README.md"
+  ],
+  "keywords": [
+    "opencode",
+    "opencode-desktop",
+    "theme",
+    "deepseek",
+    "dark-theme",
+    "glassmorphism",
+    "cli",
+    "deepseek-chan",
+    "video-background",
+    "electron-theme",
+    "cli-installer"
+  ],
+  "author": "daemon1s",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/daemon1s/opencode-deepseek-chan.git"
+  },
+  "homepage": "https://github.com/daemon1s/opencode-deepseek-chan",
+  "bugs": {
+    "url": "https://github.com/daemon1s/opencode-deepseek-chan/issues"
+  },
+  "dependencies": {
+    "@electron/asar": "^3.2.14"
+  }
+}

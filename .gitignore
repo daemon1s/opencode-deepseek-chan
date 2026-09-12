@@ -1,0 +1,12 @@
+node_modules/
+*.bak
+.DS_Store
+Thumbs.db
+CHANGELOG.md
+EXPLICACION_TECNICA.md
+SPEC.md
+scripts/
+devtools/
+src/deepseek-theme.css
+assets/readme_videos/
+assets/previews/*_clean-720p.mp4
