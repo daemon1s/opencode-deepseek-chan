@@ -4,6 +4,10 @@ Unofficial community theme: cyber-dark and glassmorphism visual theme inspired b
 
 非官方社区主题：受 DeepSeek-chan 启发的赛博暗黑玻璃拟态主题，适用于 OpenCode Desktop，附带交互式终端安装器，可安全地安装与恢复主题，无需手动修改代码。
 
+**Windows only**: the installer patches the OpenCode Desktop installation under `%LOCALAPPDATA%`. macOS and Linux are not supported yet.
+
+**仅支持 Windows**：安装器会修改 `%LOCALAPPDATA%` 下的 OpenCode Desktop 安装。暂不支持 macOS 和 Linux。
+
 ![Version](https://img.shields.io/badge/version-1.0.0-4D6BFE)
 ![License](https://img.shields.io/badge/license-MIT-70C0FF)
 ![Platform](https://img.shields.io/badge/platform-Windows-0B1528)
