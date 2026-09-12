@@ -115,7 +115,7 @@ const obtainAssetFile = async (preset, localeStrings) => {
   return destinationPath;
 };
 
-const executeInstall = async (itemType, filePath, localeStrings) => {
+const executeInstall = async (itemType, filePath, localeStrings, themeTitle) => {
   if (isOpenCodeRunning()) {
     console.log(`${colors.red}${localeStrings.opencodeRunning}${colors.reset}`);
     process.exit(1);
@@ -128,8 +128,24 @@ const executeInstall = async (itemType, filePath, localeStrings) => {
   }
 
   try {
-    await installTheme(itemType, filePath);
-    console.log(`${colors.green}${colors.bold}${localeStrings.installSuccess}${colors.reset}\n`);
+    const stepLabels = {
+      backup: localeStrings.stepBackup,
+      encode: localeStrings.stepEncode,
+      extract: localeStrings.stepExtract,
+      patch: localeStrings.stepPatch,
+      repack: localeStrings.stepRepack
+    };
+
+    const stepLog = (key, current, total) => {
+      const label = stepLabels[key] || key;
+      console.log(`${colors.cyan}${colors.bold}[${current}/${total}]${colors.reset} ${label}...`);
+    };
+
+    await installTheme(itemType, filePath, stepLog);
+    const successMessage = themeTitle
+      ? localeStrings.installSuccessNamed.replace("{theme}", themeTitle)
+      : localeStrings.installSuccess;
+    console.log(`${colors.green}${colors.bold}${successMessage}${colors.reset}\n`);
   } catch (error) {
     console.log(`${colors.red}${localeStrings.error}: ${error.message}${colors.reset}`);
     process.exit(1);
@@ -211,7 +227,7 @@ const runInteractiveMenu = async (localeStrings, currentLocale = "en", cliArgs =
       const title = localeStrings[chosenPreset.titleKey] || chosenPreset.id;
       console.log(`\n${colors.cyan}${title}${colors.reset}\n`);
       const assetPath = await obtainAssetFile(chosenPreset, localeStrings);
-      await executeInstall(chosenPreset.type, assetPath, localeStrings);
+await executeInstall(chosenPreset.type, assetPath, localeStrings, title);
     } else if (numericChoice === changeLangOptionNumber) {
       promptLanguageSelection(readlineInterface, localeStrings, cliArgs, async (selectedLanguage) => {
         readlineInterface.close();
@@ -280,7 +296,7 @@ const main = async () => {
     const title = localeStrings[chosenPreset.titleKey] || chosenPreset.id;
     console.log(`${colors.cyan}${title}${colors.reset}\n`);
     const assetPath = await obtainAssetFile(chosenPreset, localeStrings);
-    await executeInstall(chosenPreset.type, assetPath, localeStrings);
+    await executeInstall(chosenPreset.type, assetPath, localeStrings, title);
     return;
   }
 
@@ -290,11 +306,13 @@ const main = async () => {
       const cleaned = cliArgs.install.trim().replace(/^["']|["']$/g, "");
       const extension = path.extname(cleaned).toLowerCase();
       const isVideo = [".mp4", ".webm", ".mkv"].includes(extension);
-      await executeInstall(isVideo ? "video" : "image", cleaned, localeStrings);
+      const customTitle = path.basename(cleaned, path.extname(cleaned));
+      await executeInstall(isVideo ? "video" : "image", cleaned, localeStrings, customTitle);
     } else {
       const defaultPreset = presets[0];
+      const defaultTitle = localeStrings[defaultPreset.titleKey] || defaultPreset.id;
       const assetPath = await obtainAssetFile(defaultPreset, localeStrings);
-      await executeInstall(defaultPreset.type, assetPath, localeStrings);
+      await executeInstall(defaultPreset.type, assetPath, localeStrings, defaultTitle);
     }
     return;
   }

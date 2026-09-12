@@ -231,7 +231,17 @@ button:hover {
 };
 
 const installTheme = async (itemType, filePath, logFunction) => {
-  const log = logFunction || console.log;
+  const log = logFunction || (() => {});
+
+  const stepKeys =
+    itemType === "video"
+      ? ["backup", "extract", "patch", "repack"]
+      : ["backup", "encode", "extract", "patch", "repack"];
+  let stepIndex = 0;
+  const emitStep = (key) => {
+    stepIndex += 1;
+    log(key, stepIndex, stepKeys.length);
+  };
 
   if (isOpenCodeRunning()) {
     throw new Error("OPENCODE_RUNNING");
@@ -250,6 +260,7 @@ const installTheme = async (itemType, filePath, logFunction) => {
     throw new Error(`app.asar not found in ${resourcesDirectory}`);
   }
 
+  emitStep("backup");
   if (fs.existsSync(appAsarBackupPath)) {
     fs.copyFileSync(appAsarBackupPath, appAsarPath);
   } else {
@@ -263,6 +274,7 @@ const installTheme = async (itemType, filePath, logFunction) => {
   const isVideo = itemType === "video";
   let base64Url = "";
   if (!isVideo) {
+    emitStep("encode");
     base64Url = encodeImageToBase64(filePath);
   }
 
@@ -273,6 +285,7 @@ const installTheme = async (itemType, filePath, logFunction) => {
     `opencode_patch_${Date.now()}`
   );
 
+  emitStep("extract");
   asar.extractAll(appAsarPath, temporaryExtractionPath);
 
   const indexHtmlPath = path.join(
@@ -315,9 +328,11 @@ const installTheme = async (itemType, filePath, logFunction) => {
   }
 
   const styleBlock = `<style id="opencode-bg-correct-override">${themeCss}</style>\n</head>`;
+  emitStep("patch");
   indexHtmlContent = indexHtmlContent.replace("</head>", styleBlock);
   fs.writeFileSync(indexHtmlPath, indexHtmlContent, "utf8");
 
+  emitStep("repack");
   await asar.createPackage(temporaryExtractionPath, appAsarPath);
   fs.rmSync(temporaryExtractionPath, { recursive: true, force: true });
 };
