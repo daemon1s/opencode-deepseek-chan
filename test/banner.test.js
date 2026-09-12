@@ -5,6 +5,7 @@ const {
   generateBannerFrame,
   renderStaticBanner,
   startBannerLoop,
+  renderProgressBar,
   bannerLines,
   deepseekPalette
 } = require("../src/banner");
@@ -74,4 +75,26 @@ test("startBannerLoop provides non-crashing controller in non-interactive enviro
   assert.ok(controller);
   assert.equal(typeof controller.stop, "function");
   assert.doesNotThrow(() => controller.stop());
+});
+
+test("renderProgressBar fills blocks proportionally with truecolor gradient", () => {
+  const output = renderProgressBar(0.5, 4);
+  const plain = stripAnsi(output);
+  const filledBlocks = (plain.match(/█/g) || []).length;
+  const emptyBlocks = (plain.match(/░/g) || []).length;
+
+  assert.equal(filledBlocks, 2);
+  assert.equal(emptyBlocks, 2);
+  assert.ok(output.includes("\x1b[38;2;"));
+  assert.ok(output.includes("\x1b[0m"));
+});
+
+test("renderProgressBar clamps progress outside zero-to-one range", () => {
+  const fullBar = renderProgressBar(1.5, 4);
+  const emptyBar = renderProgressBar(-0.5, 4);
+  const zeroBar = renderProgressBar(0, 4);
+
+  assert.equal((stripAnsi(fullBar).match(/█/g) || []).length, 4);
+  assert.equal((stripAnsi(emptyBar).match(/█/g) || []).length, 0);
+  assert.equal((stripAnsi(zeroBar).match(/█/g) || []).length, 0);
 });

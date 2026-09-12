@@ -40,6 +40,22 @@ const colorTextRgb = (text, r, g, b) => {
   return `\x1b[38;2;${r};${g};${b}m${text}\x1b[0m`;
 };
 
+const renderProgressBar = (progress, width = 24) => {
+  const clampedProgress = Math.max(0, Math.min(1, progress));
+  const filledCount = Math.round(clampedProgress * width);
+  let bar = "[";
+  for (let index = 0; index < width; index += 1) {
+    if (index < filledCount) {
+      const color = getMultiStopColor(deepseekPalette, index / width);
+      bar += `\x1b[38;2;${color.r};${color.g};${color.b}m█`;
+    } else {
+      bar += "\x1b[90m░\x1b[0m";
+    }
+  }
+  bar += "\x1b[0m]";
+  return bar;
+};
+
 const generateBannerFrame = (offset = 0) => {
   const maxWidth = bannerLines.reduce((max, line) => Math.max(max, line.length), 0);
   const coloredLines = bannerLines.map((line) => {
@@ -110,5 +126,6 @@ module.exports = {
   colorTextRgb,
   generateBannerFrame,
   renderStaticBanner,
-  startBannerLoop
+  startBannerLoop,
+  renderProgressBar
 };

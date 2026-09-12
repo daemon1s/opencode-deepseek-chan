@@ -15,7 +15,7 @@ const {
   installTheme,
   restoreTheme
 } = require("../src/engine");
-const { renderStaticBanner, startBannerLoop } = require("../src/banner");
+const { renderStaticBanner, startBannerLoop, renderProgressBar } = require("../src/banner");
 
 const colors = {
   reset: "\x1b[0m",
@@ -97,9 +97,11 @@ const obtainAssetFile = async (preset, localeStrings) => {
 
   let previousRenderLength = 0;
   const onProgress = (downloaded, total) => {
-    const percentage = total > 0 ? Math.round((downloaded / total) * 100) : 0;
-    const progressText = `  [${percentage}%] ${formatBytes(downloaded)} / ${formatBytes(total || preset.expectedSize)}`;
-    process.stdout.write(`\r${progressText}`);
+    const ratio = total > 0 ? downloaded / total : 0;
+    const percentage = Math.round(ratio * 100);
+    const progressBar = renderProgressBar(ratio);
+    const progressText = `  ${progressBar} ${String(percentage).padStart(3)}% ${formatBytes(downloaded)} / ${formatBytes(total || preset.expectedSize)}`;
+    process.stdout.write(`\r${progressText}\x1b[K`);
     previousRenderLength = progressText.length;
   };
 
