@@ -1,6 +1,6 @@
 {
   "name": "opencode-deepseek-chan",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Animated video backgrounds & cyber glassmorphism theme for OpenCode Desktop (DeepSeek-chan). 适用于 OpenCode Desktop 的 DeepSeek 赛博动态壁纸主题。",
   "main": "bin/cli.js",
   "bin": {
