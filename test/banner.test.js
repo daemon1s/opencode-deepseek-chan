@@ -43,12 +43,14 @@ test("deepseekPalette defines valid rgb stops", () => {
   }
 });
 
-test("bannerLines contains deepseek ascii representation", () => {
+test("bannerLines contains deepseek-chan ascii representation", () => {
   assert.ok(Array.isArray(bannerLines));
   assert.ok(bannerLines.length >= 5);
   const plainAscii = bannerLines.join("\n");
   assert.ok(plainAscii.includes("____"));
   assert.ok(plainAscii.includes("___| | __"));
+  assert.ok(plainAscii.includes("|_____|"));
+  assert.ok(plainAscii.includes("___| |__"));
 });
 
 test("generateBannerFrame applies 24-bit ansi truecolor codes", () => {
