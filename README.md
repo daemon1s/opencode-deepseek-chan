@@ -8,7 +8,7 @@ Unofficial community theme: cyber-dark and glassmorphism visual theme inspired b
 
 **仅支持 Windows**：安装器会修改 `%LOCALAPPDATA%` 下的 OpenCode Desktop 安装。暂不支持 macOS 和 Linux。
 
-![Version](https://img.shields.io/badge/version-1.0.1-4D6BFE)
+![Version](https://img.shields.io/badge/version-1.0.2-4D6BFE)
 ![License](https://img.shields.io/badge/license-MIT-70C0FF)
 ![Platform](https://img.shields.io/badge/platform-Windows-0B1528)
 ![Node](https://img.shields.io/badge/node-%3E%3D18-4D6BFE)
