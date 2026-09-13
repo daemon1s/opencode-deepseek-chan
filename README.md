@@ -98,6 +98,20 @@ node bin/cli.js --restore               # Restore factory state / 恢复出厂�
 node bin/cli.js --lang zh               # Force language: en | zh | es / 指定语言
 ```
 
+### Custom background example / 自定义背景示例
+
+You can apply any local image (.png, .jpg, .webp) or video (.mp4, .webm) with `--install`. The installer automatically applies the translucent cyber glassmorphism theme on top:
+
+你可以使用 `--install` 参数应用任何本地图片（.png、.jpg、.webp）或视频（.mp4、.webm），安装器会自动叠加赛博半透明玻璃拟态主题：
+
+```bash
+npx opencode-deepseek-chan --install "C:\path\to\your\background.png"
+```
+
+![Custom whale background preview](./assets/previews/whale.png)  
+*Example: DeepSeek pixel art whale. [Wallpaper on Imgur](https://imgur.com/a/deepseek-whale-theme-opencode-by-daemon1s-98H5qKn)*  
+*示例：DeepSeek 像素鲸鱼。[Imgur 壁纸原图](https://imgur.com/a/deepseek-whale-theme-opencode-by-daemon1s-98H5qKn)*
+
 ## Uninstall / 卸载
 
 ```bash
