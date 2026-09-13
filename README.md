@@ -19,7 +19,7 @@ Unofficial community theme: cyber-dark and glassmorphism visual theme inspired b
 
 | Féishā | Maid whale | Midnight | Artwork |
 | --- | --- | --- | --- |
-| ![Féishā preview](./assets/previews/feisha_preview.gif) | ![Maid whale preview](./assets/previews/doncella_preview.gif) | ![Midnight preview](./assets/previews/midnight_preview.gif) | ![Artwork preview](./assets/previews/artwork_preview.png) |
+| ![Féishā preview](./assets/previews/feisha_preview.gif) | ![Maid whale preview](./assets/previews/doncella_preview.gif) | ![Midnight preview](./assets/previews/midnight_preview.gif) | ![Artwork preview](./assets/previews/OpenCode_2KPkXs7x2s.png) |
 | 绯莎 | 深海女仆 | 深夜 | 插画 |
 
 ## Presets / 预设
