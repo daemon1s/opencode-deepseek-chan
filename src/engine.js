@@ -22,7 +22,11 @@ const isOpenCodeRunning = () => {
   }
 };
 
-const resolveOpenCodePath = () => {
+const resolveOpenCodePath = (customBasePath = null) => {
+  if (customBasePath && fs.existsSync(customBasePath)) {
+    return customBasePath;
+  }
+
   const localAppData = process.env.LOCALAPPDATA || "";
   const candidatePaths = [
     path.join(localAppData, "Programs", "@opencode-aidesktop"),
@@ -230,7 +234,7 @@ button:hover {
 `;
 };
 
-const installTheme = async (itemType, filePath, logFunction) => {
+const installTheme = async (itemType, filePath, logFunction, customBasePath = null) => {
   const log = logFunction || (() => {});
 
   const stepKeys =
@@ -243,11 +247,11 @@ const installTheme = async (itemType, filePath, logFunction) => {
     log(key, stepIndex, stepKeys.length);
   };
 
-  if (isOpenCodeRunning()) {
+  if (!customBasePath && isOpenCodeRunning()) {
     throw new Error("OPENCODE_RUNNING");
   }
 
-  const openCodeBasePath = resolveOpenCodePath();
+  const openCodeBasePath = resolveOpenCodePath(customBasePath);
   if (!openCodeBasePath) {
     throw new Error("PATH_NOT_FOUND");
   }
@@ -284,65 +288,77 @@ const installTheme = async (itemType, filePath, logFunction) => {
     os.tmpdir(),
     `opencode_patch_${Date.now()}`
   );
-
-  emitStep("extract");
-  asar.extractAll(appAsarPath, temporaryExtractionPath);
-
-  const indexHtmlPath = path.join(
-    temporaryExtractionPath,
-    "out",
-    "renderer",
-    "index.html"
+  const appAsarTempPath = path.join(
+    resourcesDirectory,
+    `app.asar.tmp_${Date.now()}`
   );
 
-  if (!fs.existsSync(indexHtmlPath)) {
-    fs.rmSync(temporaryExtractionPath, { recursive: true, force: true });
-    throw new Error("index.html not found inside app.asar");
-  }
+  try {
+    emitStep("extract");
+    asar.extractAll(appAsarPath, temporaryExtractionPath);
 
-  let indexHtmlContent = fs.readFileSync(indexHtmlPath, "utf8");
-
-  indexHtmlContent = indexHtmlContent.replace(
-    /<video id="opencode-bg-video"[^>]*><\/video>\s*/gi,
-    ""
-  );
-
-  if (isVideo) {
-    const rendererAssetsDir = path.join(
+    const indexHtmlPath = path.join(
       temporaryExtractionPath,
       "out",
       "renderer",
-      "assets"
+      "index.html"
     );
-    if (!fs.existsSync(rendererAssetsDir)) {
-      fs.mkdirSync(rendererAssetsDir, { recursive: true });
+
+    if (!fs.existsSync(indexHtmlPath)) {
+      throw new Error("index.html not found inside app.asar");
     }
-    const targetVideoPath = path.join(rendererAssetsDir, "deepseek-bg.mp4");
-    fs.copyFileSync(filePath, targetVideoPath);
 
-    const videoTag = `<video id="opencode-bg-video" autoplay loop muted playsinline src="./assets/deepseek-bg.mp4"></video>`;
+    let indexHtmlContent = fs.readFileSync(indexHtmlPath, "utf8");
+
     indexHtmlContent = indexHtmlContent.replace(
-      /(<body[^>]*>)/i,
-      `$1\n    ${videoTag}`
+      /<video id="opencode-bg-video"[^>]*><\/video>\s*/gi,
+      ""
     );
+
+    if (isVideo) {
+      const rendererAssetsDir = path.join(
+        temporaryExtractionPath,
+        "out",
+        "renderer",
+        "assets"
+      );
+      if (!fs.existsSync(rendererAssetsDir)) {
+        fs.mkdirSync(rendererAssetsDir, { recursive: true });
+      }
+      const targetVideoPath = path.join(rendererAssetsDir, "deepseek-bg.mp4");
+      fs.copyFileSync(filePath, targetVideoPath);
+
+      const videoTag = `<video id="opencode-bg-video" autoplay loop muted playsinline src="./assets/deepseek-bg.mp4"></video>`;
+      indexHtmlContent = indexHtmlContent.replace(
+        /(<body[^>]*>)/i,
+        `$1\n    ${videoTag}`
+      );
+    }
+
+    const styleBlock = `<style id="opencode-bg-correct-override">${themeCss}</style>\n</head>`;
+    emitStep("patch");
+    indexHtmlContent = indexHtmlContent.replace("</head>", styleBlock);
+    fs.writeFileSync(indexHtmlPath, indexHtmlContent, "utf8");
+
+    emitStep("repack");
+    await asar.createPackage(temporaryExtractionPath, appAsarTempPath);
+    fs.renameSync(appAsarTempPath, appAsarPath);
+  } finally {
+    if (fs.existsSync(appAsarTempPath)) {
+      fs.rmSync(appAsarTempPath, { force: true });
+    }
+    if (fs.existsSync(temporaryExtractionPath)) {
+      fs.rmSync(temporaryExtractionPath, { recursive: true, force: true });
+    }
   }
-
-  const styleBlock = `<style id="opencode-bg-correct-override">${themeCss}</style>\n</head>`;
-  emitStep("patch");
-  indexHtmlContent = indexHtmlContent.replace("</head>", styleBlock);
-  fs.writeFileSync(indexHtmlPath, indexHtmlContent, "utf8");
-
-  emitStep("repack");
-  await asar.createPackage(temporaryExtractionPath, appAsarPath);
-  fs.rmSync(temporaryExtractionPath, { recursive: true, force: true });
 };
 
-const restoreTheme = () => {
-  if (isOpenCodeRunning()) {
+const restoreTheme = (customBasePath = null) => {
+  if (!customBasePath && isOpenCodeRunning()) {
     throw new Error("OPENCODE_RUNNING");
   }
 
-  const openCodeBasePath = resolveOpenCodePath();
+  const openCodeBasePath = resolveOpenCodePath(customBasePath);
   if (!openCodeBasePath) {
     throw new Error("PATH_NOT_FOUND");
   }
