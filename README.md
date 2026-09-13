@@ -72,6 +72,8 @@ The interactive menu shows the ready-to-use presets:
 
 交互式菜单会展示预设选项：
 
+![Interactive menu preview](./assets/previews/menu.gif)
+
 ```text
 Select a background preset:
   1) DeepSeek Féishā
