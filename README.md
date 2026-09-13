@@ -8,7 +8,7 @@ Unofficial community theme: cyber-dark and glassmorphism visual theme inspired b
 
 **仅支持 Windows**：安装器会修改 `%LOCALAPPDATA%` 下的 OpenCode Desktop 安装。暂不支持 macOS 和 Linux。
 
-![Version](https://img.shields.io/badge/version-1.0.2-4D6BFE)
+![Version](https://img.shields.io/badge/version-1.0.3-4D6BFE)
 ![License](https://img.shields.io/badge/license-MIT-70C0FF)
 ![Platform](https://img.shields.io/badge/platform-Windows-0B1528)
 ![Node](https://img.shields.io/badge/node-%3E%3D18-4D6BFE)
@@ -31,7 +31,7 @@ The installer downloads the background assets on demand from GitHub Releases and
 | # | Preset / 预设 | Type / 类型 | Size / 大小 |
 | --- | --- | --- | --- |
 | 1 | DeepSeek Féishā / DeepSeek 绯莎 | Video 1080p / 视频 1080p | ~6.4 MB |
-| 2 | DeepSeek Maid Whale (ZipZip) / DeepSeek 深海女仆 (ZipZip) | Video 1080p / 视频 1080p | ~11.4 MB |
+| 2 | DeepSeek Maid Whale / DeepSeek 深海女仆 | Video 1080p / 视频 1080p | ~11.4 MB |
 | 3 | DeepSeek Midnight / DeepSeek 深夜 | Video 1080p / 视频 1080p | ~20.2 MB |
 | 4 | DeepSeek Artwork / DeepSeek 插画 | Image 4K / 图片 4K | ~9.6 MB |
 
@@ -74,10 +74,10 @@ The interactive menu shows the ready-to-use presets:
 
 ```text
 Select a background preset:
-  1) DeepSeek Féishā (1080p)
-  2) DeepSeek Maid Whale (ZipZip)
-  3) DeepSeek Midnight (1080p)
-  4) DeepSeek Artwork (4K)
+  1) DeepSeek Féishā
+  2) DeepSeek Maid Whale
+  3) DeepSeek Midnight
+  4) DeepSeek Artwork
   5) Restore original OpenCode design
   6) Exit
 ```
