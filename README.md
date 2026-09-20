@@ -8,7 +8,7 @@ Unofficial community theme: cyber-dark and glassmorphism visual theme inspired b
 
 **仅支持 Windows**：安装器会修改 `%LOCALAPPDATA%` 下的 OpenCode Desktop 安装。暂不支持 macOS 和 Linux。
 
-![Version](https://img.shields.io/badge/version-1.0.3-4D6BFE)
+![Version](https://img.shields.io/badge/version-1.0.4-4D6BFE)
 ![License](https://img.shields.io/badge/license-MIT-70C0FF)
 ![Platform](https://img.shields.io/badge/platform-Windows-0B1528)
 ![Node](https://img.shields.io/badge/node-%3E%3D18-4D6BFE)
@@ -21,6 +21,14 @@ Unofficial community theme: cyber-dark and glassmorphism visual theme inspired b
 | --- | --- | --- | --- |
 | ![Féishā preview](./assets/previews/feisha_preview.gif) | ![Maid whale preview](./assets/previews/doncella_preview.gif) | ![Midnight preview](./assets/previews/midnight_preview.gif) | ![Artwork preview](./assets/previews/OpenCode_2KPkXs7x2s.png) |
 | 绯莎 | 深海女仆 | 深夜 | 插画 |
+
+## UI polish / 界面优化
+
+Subtle visual refinements on top of the background: the chat title renders as a highlighted pill with a soft animated border, tool chips light up gently while a tool is running, and prompt context file chips share a consistent midnight-blue style.
+
+在背景之上加入了细腻的界面优化：聊天标题以带柔和动态光边的高亮胶囊呈现，工具运行时工具标签会亮起柔和高光，提示词上下文文件标签统一为一致的午夜蓝风格。
+
+![Beam preview](./assets/previews/newrelease.png)
 
 ## Presets / 预设
 
