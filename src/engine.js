@@ -142,6 +142,28 @@ aside,
   border-color: rgba(112, 192, 255, 0.45) !important;
 }
 
+[data-session-title] [data-slot="session-title-child"],
+[data-slot="session-title-child"] {
+  width: fit-content !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  background: linear-gradient(rgba(14, 23, 42, 0.9), rgba(14, 23, 42, 0.9)) padding-box,
+    conic-gradient(
+        from var(--deepseek-beam-angle),
+        rgba(77, 107, 254, 0) 0%,
+        rgba(77, 107, 254, 0.25) 30%,
+        rgba(77, 107, 254, 0.25) 50%,
+        rgba(77, 107, 254, 0) 80%,
+        rgba(77, 107, 254, 0) 100%
+      )
+      border-box !important;
+  border: 1px solid transparent !important;
+  border-radius: 8px !important;
+  padding: 4px 12px !important;
+  box-shadow: 0 0 12px rgba(77, 107, 254, 0.35) !important;
+  animation: deepseek-beam-spin 3.5s linear infinite;
+}
+
 [data-role="user"],
 [data-message-author="user"] {
   background-color: rgba(77, 107, 254, 0.22) !important;
@@ -230,6 +252,144 @@ button:hover {
 [data-slot="dropdown-menu-separator"],
 [data-slot="menu-v2-separator"] {
   background-color: rgba(77, 107, 254, 0.25) !important;
+}
+
+#root > div [class*="inset-x-0"][class*="max-h-80"][class*="-translate-y-full"],
+body [class*="inset-x-0"][class*="max-h-80"][class*="-translate-y-full"] {
+  background: linear-gradient(#0e172a, #0e172a) padding-box,
+    conic-gradient(
+        from var(--deepseek-beam-angle),
+        transparent 0%,
+        rgba(30, 41, 82, 0.9) 12%,
+        #1e2952 25%,
+        rgba(30, 41, 82, 0.9) 38%,
+        transparent 50%,
+        transparent 100%
+      )
+      border-box !important;
+  border: 1px solid transparent !important;
+  border-radius: 10px !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 24px rgba(30, 41, 82, 0.45) !important;
+  color: #f1f5f9 !important;
+  animation: deepseek-beam-spin 3.5s linear infinite;
+}
+
+@property --deepseek-beam-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes deepseek-beam-spin {
+  to {
+    --deepseek-beam-angle: 360deg;
+  }
+}
+
+#root > div [class*="inset-x-0"][class*="max-h-80"] button,
+body [class*="inset-x-0"][class*="max-h-80"] button {
+  color: #e2e8f0 !important;
+}
+
+#root > div [class*="inset-x-0"][class*="max-h-80"] button[class*="bg-surface-raised-base-hover"],
+body [class*="inset-x-0"][class*="max-h-80"] button[class*="bg-surface-raised-base-hover"],
+#root > div [class*="inset-x-0"][class*="max-h-80"] button[class*="bg-v2-overlay-simple-overlay-hover"],
+body [class*="inset-x-0"][class*="max-h-80"] button[class*="bg-v2-overlay-simple-overlay-hover"] {
+  background-color: rgba(77, 107, 254, 0.4) !important;
+  color: #ffffff !important;
+}
+
+#root > div [data-slot*="mention-list"] {
+  background-color: rgba(14, 23, 42, 0.95) !important;
+  border: 1px solid rgba(77, 107, 254, 0.35) !important;
+}
+
+#root > div [data-slot*="mention-item"][data-active] {
+  background-color: rgba(77, 107, 254, 0.4) !important;
+}
+
+#root > div [class*="flex-nowrap"][class*="overflow-x-auto"][class*="no-scrollbar"] [class*="max-w-[200px]"],
+body [class*="flex-nowrap"][class*="overflow-x-auto"][class*="no-scrollbar"] [class*="max-w-[200px]"] {
+  background: linear-gradient(rgba(11, 21, 40, 0.92), rgba(11, 21, 40, 0.92)) padding-box,
+    conic-gradient(
+        from var(--deepseek-beam-angle),
+        transparent 0%,
+        rgba(30, 41, 82, 0.9) 12%,
+        #1e2952 25%,
+        rgba(30, 41, 82, 0.9) 38%,
+        transparent 50%,
+        transparent 100%
+      )
+      border-box !important;
+  border: 1px solid transparent !important;
+  border-radius: 6px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45), 0 0 10px rgba(30, 41, 82, 0.3) !important;
+  animation: deepseek-beam-spin 4s linear infinite;
+}
+
+#root > div [class*="flex-nowrap"][class*="overflow-x-auto"][class*="no-scrollbar"] [class*="max-w-[200px]"][class*="bg-surface-interactive-hover"],
+body [class*="flex-nowrap"][class*="overflow-x-auto"][class*="no-scrollbar"] [class*="max-w-[200px]"][class*="bg-surface-interactive-hover"] {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45), 0 0 14px rgba(30, 41, 82, 0.55) !important;
+}
+
+#root > div [data-component="tool-trigger"],
+body [data-component="tool-trigger"] {
+  background: linear-gradient(rgba(14, 23, 42, 0.9), rgba(14, 23, 42, 0.9)) padding-box,
+    linear-gradient(rgba(77, 107, 254, 0.18), rgba(77, 107, 254, 0.18)) border-box !important;
+  border: 1px solid transparent !important;
+  border-radius: 8px !important;
+  padding: 4px 12px !important;
+  box-shadow: 0 0 12px rgba(77, 107, 254, 0.35) !important;
+}
+
+#root > div [data-component="tool-trigger"]:has([data-component="text-shimmer"][data-active="true"]),
+body [data-component="tool-trigger"]:has([data-component="text-shimmer"][data-active="true"]),
+#root > div [data-component="tool-trigger"]:has([data-component="spinner"]),
+body [data-component="tool-trigger"]:has([data-component="spinner"]) {
+  background: linear-gradient(rgba(14, 23, 42, 0.9), rgba(14, 23, 42, 0.9)) padding-box,
+    conic-gradient(
+        from var(--deepseek-beam-angle),
+        rgba(77, 107, 254, 0) 0%,
+        rgba(77, 107, 254, 0.25) 30%,
+        rgba(77, 107, 254, 0.25) 50%,
+        rgba(77, 107, 254, 0) 80%,
+        rgba(77, 107, 254, 0) 100%
+      )
+      border-box !important;
+  animation: deepseek-beam-spin 3.5s linear infinite;
+}
+
+#root > div [data-component="context-tool-group-trigger"],
+body [data-component="context-tool-group-trigger"] {
+  background: linear-gradient(rgba(14, 23, 42, 0.92), rgba(14, 23, 42, 0.92)) padding-box,
+    linear-gradient(rgba(77, 107, 254, 0.18), rgba(77, 107, 254, 0.18)) border-box !important;
+  border: 1px solid transparent !important;
+  border-radius: 8px !important;
+  padding: 4px 12px !important;
+  box-shadow: 0 0 12px rgba(77, 107, 254, 0.4) !important;
+}
+
+#root > div [data-component="context-tool-group-trigger"]:has([data-slot="tool-status-active"]),
+body [data-component="context-tool-group-trigger"]:has([data-slot="tool-status-active"]) {
+  background: linear-gradient(rgba(14, 23, 42, 0.92), rgba(14, 23, 42, 0.92)) padding-box,
+    conic-gradient(
+        from var(--deepseek-beam-angle),
+        rgba(77, 107, 254, 0) 0%,
+        rgba(77, 107, 254, 0.25) 30%,
+        rgba(77, 107, 254, 0.25) 50%,
+        rgba(77, 107, 254, 0) 80%,
+        rgba(77, 107, 254, 0) 100%
+      )
+      border-box !important;
+  animation: deepseek-beam-spin 3.5s linear infinite;
+}
+
+[data-component="tool-part-wrapper"] > [data-component="collapsible"].tool-collapsible {
+  margin-block: 4px !important;
+}
+
+[data-component="context-tool-group-list"] {
+  gap: 8px !important;
 }
 `;
 };
