@@ -21,6 +21,54 @@ test("generateThemeCss produces body background styles when isVideo is false", (
   assert.ok(!css.includes("#opencode-bg-video"));
 });
 
+test("generateThemeCss styles the @ mention popover with an opaque dark beam", () => {
+  const css = generateThemeCss(true, "");
+  assert.ok(css.includes('[class*="inset-x-0"][class*="max-h-80"][class*="-translate-y-full"]'));
+  assert.ok(css.includes("linear-gradient(#0e172a, #0e172a) padding-box"));
+  assert.ok(css.includes("rgba(30, 41, 82, 0.9) 12%"));
+  assert.ok(css.includes("#1e2952 25%"));
+  assert.ok(!css.includes("rgba(77, 107, 254, 0.85) 12%"));
+  assert.ok(css.includes("@keyframes deepseek-beam-spin"));
+  assert.ok(css.includes('[data-slot*="mention-list"]'));
+});
+
+test("generateThemeCss applies the dark beam to prompt context file chips", () => {
+  const css = generateThemeCss(true, "");
+  assert.ok(css.includes('[class*="flex-nowrap"][class*="overflow-x-auto"][class*="no-scrollbar"] [class*="max-w-[200px]"]'));
+  assert.ok(css.includes('[class*="bg-surface-interactive-hover"]'));
+  assert.ok(css.includes("animation: deepseek-beam-spin 4s linear infinite"));
+});
+
+test("generateThemeCss styles the session title as a beam pill", () => {
+  const css = generateThemeCss(true, "");
+  assert.ok(css.includes('[data-session-title] [data-slot="session-title-child"]'));
+  assert.ok(css.includes('linear-gradient(rgba(14, 23, 42, 0.9), rgba(14, 23, 42, 0.9)) padding-box'));
+  assert.ok(css.includes("rgba(77, 107, 254, 0.25) 30%"));
+  assert.ok(css.includes("animation: deepseek-beam-spin 3.5s linear infinite"));
+});
+
+test("generateThemeCss styles tool trigger pills with beam and feed spacing", () => {
+  const css = generateThemeCss(true, "");
+  assert.ok(css.includes('[data-component="tool-trigger"]'));
+  assert.ok(css.includes('linear-gradient(rgba(77, 107, 254, 0.18), rgba(77, 107, 254, 0.18)) border-box'));
+  assert.ok(css.includes("rgba(77, 107, 254, 0.25) 30%"));
+  assert.ok(css.includes("rgba(77, 107, 254, 0.25) 50%"));
+  assert.ok(css.includes('[data-component="tool-trigger"]:has([data-component="text-shimmer"][data-active="true"])'));
+  assert.ok(css.includes('[data-component="tool-trigger"]:has([data-component="spinner"])'));
+  assert.ok(css.includes('[data-component="tool-part-wrapper"] > [data-component="collapsible"].tool-collapsible'));
+  assert.ok(css.includes("margin-block: 4px !important"));
+});
+
+test("generateThemeCss styles the context tool group summary with beam states", () => {
+  const css = generateThemeCss(true, "");
+  assert.ok(css.includes('[data-component="context-tool-group-trigger"]'));
+  assert.ok(css.includes('linear-gradient(rgba(77, 107, 254, 0.18), rgba(77, 107, 254, 0.18)) border-box'));
+  assert.ok(css.includes("rgba(77, 107, 254, 0.25) 50%"));
+  assert.ok(css.includes('[data-component="context-tool-group-trigger"]:has([data-slot="tool-status-active"])'));
+  assert.ok(css.includes('[data-component="context-tool-group-list"]'));
+  assert.ok(css.includes("gap: 8px !important"));
+});
+
 test("installTheme creates atomic repack and cleans up temporary archives", async () => {
   const testRoot = fs.mkdtempSync(path.join(os.tmpdir(), "engine_test_"));
   const resourcesDirectory = path.join(testRoot, "resources");
